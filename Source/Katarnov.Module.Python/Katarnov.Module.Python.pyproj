@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{f7939ccf-6e99-4f50-8248-14085ad5a921}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>_start.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>IronPython (.NET) launcher</LaunchProvider>
+    <InterpreterId>{80659ab7-4d53-4e0c-8588-a766116cbd46}</InterpreterId>
+    <InterpreterVersion>2.7</InterpreterVersion>
+    <Name>Katarnov.Module.Python</Name>
+    <IsWindowsApplication>False</IsWindowsApplication>
+    <DebugStdLib>False</DebugStdLib>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Katarnov\" />
+    <Folder Include="Katarnov\PyKatarnov\base\entity\" />
+    <Folder Include="Katarnov\PyKatarnov\base\entity\turf\" />
+    <Folder Include="Katarnov\PyKatarnov\base\entity\turf\floor\" />
+    <Folder Include="Katarnov\PyKatarnov\base\entity\turf\wall\" />
+    <Folder Include="Katarnov\PyKatarnov\" />
+    <Folder Include="Katarnov\PyKatarnov\base\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Katarnov\PyKatarnov\base\entity\entity_basic.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\base\entity\turf\floor\floor_basic.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\base\entity\turf\floor\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\base\entity\turf\turf_basic.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\base\entity\turf\wall\wall_basic.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\base\entity\turf\wall\__init__.py" />
+    <Compile Include="Katarnov\PyKatarnov\base\entity\turf\__init__.py" />
+    <Compile Include="Katarnov\PyKatarnov\base\entity\__init__.py" />
+    <Compile Include="Katarnov\PyKatarnov\base\baselib.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\base\testdef.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\base\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\include.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Katarnov\PyKatarnov\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="_start.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="IronPython, Version=2.7.6.3, Culture=neutral, PublicKeyToken=7f709c5b713576e1">
+      <Name>IronPython</Name>
+      <AssemblyName>IronPython.dll</AssemblyName>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\IronPython 2.7\Platforms\Net45\IronPython.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{80659ab7-4d53-4e0c-8588-a766116cbd46}\2.7" />
+    <InterpreterReference Include="{fcc291aa-427c-498c-a4d7-4502d6449b8c}\2.7" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Katarnov.Program\Katarnov.csproj">
+      <Name>Katarnov</Name>
+      <Project>{f8fc6f10-81e8-406f-a95f-a8cc3c712369}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>
