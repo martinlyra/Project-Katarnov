@@ -5,27 +5,35 @@ using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 using System.IO;
 
-namespace ProjectKatarnov
+namespace Katarnov
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    internal class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        SpriteBatchRenderer renderer;
 
         ContentManager contentManager;
 
+        internal EntityDatabase entityDatabase;
+
+        public Map currentMap;
+        public EntityManager entityManager;
+
         public Game1()
         {
+            Global.gameInstance = this;
+
             graphics = new GraphicsDeviceManager(this);
+            entityManager = new EntityManager(this);
+            entityDatabase = new EntityDatabase(this);
+
             Content.RootDirectory = "Content";
 
             Window.Title = "Project Katarnov";
         }
-
-        Map currentMap;
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -35,24 +43,27 @@ namespace ProjectKatarnov
         /// </summary>
         protected override void Initialize()
         {
+            ModuleManager.Initialize();
+            entityDatabase.Initialize();
             // TODO: Add your initialization logic here
-            currentMap = new Map();
+            currentMap = Map.FromByondMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
 
-            FileStream fileStream = new FileStream("Content/Turf/steel_dirty.png", FileMode.Open);
-            Texture2D spriteAtlas = Texture2D.FromStream(GraphicsDevice, fileStream);
-            fileStream.Dispose();
+            /*
+            Sprite floorSprite = Sprite.LoadFile(GraphicsDevice, 
+                entityDatabase.GetDefine("Floor").spriteDef);
+            Sprite wallSprite = Sprite.LoadFile(GraphicsDevice, 
+                entityDatabase.GetDefine("Wall").spriteDef);
 
-            Debug.Assert(spriteAtlas != null);
-
-            Sprite spr = new Sprite(spriteAtlas);
-
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 12; x++)
             {
-                for (int y = 0; y < 10; y++)
+                for (int y = 0; y < 12; y++)
                 {
-                    currentMap.actorObjects.Add(new ActorObject(spr, new Vector3(x, y, 0)));
+                    if (x == 0 || x == 11 || y == 0 || y == 11)
+                        new ActorObject(wallSprite, new Vector3(x, y, 0));
+                    else
+                        new ActorObject(floorSprite, new Vector3(x, y, 0));
                 }
-            }
+            }*/
 
             base.Initialize();
         }
@@ -65,7 +76,8 @@ namespace ProjectKatarnov
         {
             contentManager = new ContentManager(Services);
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            renderer = new SpriteBatchRenderer(this);
 
             // TODO: use this.Content to load your game content here
         }
@@ -86,10 +98,15 @@ namespace ProjectKatarnov
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            Time.deltaTime = gameTime.ElapsedGameTime.Milliseconds;
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed 
+                || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            entityManager.QueryForUpdate();
+
+            entityManager.ProcessUpdate();
 
             base.Update(gameTime);
         }
@@ -102,14 +119,9 @@ namespace ProjectKatarnov
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            renderer.QueryForDrawing();
 
-            foreach (ActorObject o in currentMap.actorObjects)
-                spriteBatch.Draw(o.sprite.texture, new Vector2(o.position.X*32,o.position.Y*32), Color.White);
-
-            // TODO: Add your drawing code here
-
-            spriteBatch.End();
+            renderer.ProcessDrawing();
 
             base.Draw(gameTime);
         }

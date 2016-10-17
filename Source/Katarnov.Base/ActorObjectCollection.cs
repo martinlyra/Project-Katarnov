@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectKatarnov
+namespace Katarnov
 {
-    class ActorObjectCollection : List<ActorObject>
+    class EntityCollection : List<Entity>
     {
-        public new void Add(ActorObject actorObject)
+        public new void Add(Entity actorObject)
         {
             base.Add(actorObject);
         }

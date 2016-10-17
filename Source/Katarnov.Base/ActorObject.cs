@@ -5,22 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectKatarnov
+namespace Katarnov
 {
-    class ActorObject
+    public class ActorObject : Entity
     {
-        public Vector3 position;
-        public Vector2 bounds;
 
-        public Sprite sprite;
-
-        public bool density;
-        public bool opaque;
-
-        public bool active;
-        public bool enabled;
-
-        public ActorObject()
+        public ActorObject() : base()
         {
 
         }
@@ -36,17 +26,17 @@ namespace ProjectKatarnov
             this.position = position;
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
 
         }
 
-        public void Update()
+        public override void Update()
         {
 
         }
 
-        public void Draw()
+        public override void Draw()
         {
 
         }

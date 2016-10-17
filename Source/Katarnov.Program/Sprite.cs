@@ -1,14 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectKatarnov
+namespace Katarnov
 {
-    class Sprite
+    public class Sprite
     {
         public List<Sprite> spriteList = new List<Sprite>();
 
@@ -22,6 +23,17 @@ namespace ProjectKatarnov
         public Sprite(Texture2D texture)
         {
             this.texture = texture;
+        }
+
+        public static Sprite LoadFile(GraphicsDevice device, string file)
+        {
+            FileStream fileStream = new FileStream(file, FileMode.Open);
+            Texture2D spriteAtlas = Texture2D.FromStream(device, fileStream);
+            fileStream.Dispose();
+
+            Debug.Assert(spriteAtlas != null);
+
+            return new Sprite(spriteAtlas);
         }
 
         /*

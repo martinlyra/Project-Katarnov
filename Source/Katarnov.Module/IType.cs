@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectKatarnov
+namespace Katarnov.Module
 {
-    class TurfObject : ActorObject
+    public interface IType
     {
-        
     }
 }

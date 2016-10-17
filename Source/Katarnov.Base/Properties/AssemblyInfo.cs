@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ProjectKatarnov")]
-[assembly: AssemblyProduct("ProjectKatarnov")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyTitle("Katarnov.Base")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Katarnov.Base")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0c1f4fb8-f2d7-4683-9d75-a3d93cee2f28")]
+[assembly: Guid("24993e6d-e8ec-418c-83c4-68de5951d6e3")]
 
 // Version information for an assembly consists of the following four values:
 //

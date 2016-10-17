@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjectKatarnov
+namespace Katarnov
 {
     /// <summary>
     /// The main class.

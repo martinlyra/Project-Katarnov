@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectKatarnov
+namespace Katarnov
 {
-    class Level
+    public static class Global
     {
-        public static Map parentMap;
-        public static Vector2 size; 
+        public static Game1 gameInstance;
     }
 }
