@@ -16,8 +16,23 @@ namespace Katarnov.Module.Core
         }
     }*/
 
-    public class WallEntity : Entity
+    public class Wall : Entity
     {
         public new string spritePath = "Content/Turf/wall.png";
+
+        Wall () : base()
+        {
+            base.spritePath = spritePath;
+        }
+    }
+
+    public class WallA : Wall
+    {
+        
+    }
+
+    public class WallB : Wall
+    {
+
     }
 }

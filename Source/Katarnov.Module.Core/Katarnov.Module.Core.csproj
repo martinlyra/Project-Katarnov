@@ -46,13 +46,9 @@
     <Compile Include="Wall.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Katarnov.Base\Katarnov.Base.csproj">
+    <ProjectReference Include="..\Katarnov.Core\Katarnov.Core.csproj">
       <Project>{24993e6d-e8ec-418c-83c4-68de5951d6e3}</Project>
-      <Name>Katarnov.Base</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Katarnov.Module\Katarnov.Module.csproj">
-      <Project>{8d5cdecf-ceb5-43e8-974f-01a7e370ded5}</Project>
-      <Name>Katarnov.Module</Name>
+      <Name>Katarnov.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

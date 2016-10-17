@@ -41,11 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityDefine.cs" />
-    <Compile Include="IEntity.cs" />
-    <Compile Include="IModule.cs" />
-    <Compile Include="IType.cs" />
-    <Compile Include="ModuleInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

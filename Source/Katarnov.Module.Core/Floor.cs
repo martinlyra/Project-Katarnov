@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace Katarnov.Module.Core
 {
+    /*
     public class Floor : EntityDefine
     {
         public Floor() : base()
         {
             spriteDef = "Content/Turf/steel_dirty.png";
         }
+    }*/
+
+    public class Floor : Entity
+    {
+        public new string spritePath = "Content/Turf/steel_dirty.png";
     }
 }
