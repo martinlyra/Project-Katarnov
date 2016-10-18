@@ -14,8 +14,8 @@ namespace Katarnov
         static readonly Dictionary<string, KeyValuePair<IModule, Assembly>> moduleList = 
             new Dictionary<string, KeyValuePair<IModule, Assembly>>();
 
-        static readonly Dictionary<string, TypeInfo> importedTypes =
-            new Dictionary<string, TypeInfo>(); 
+        static readonly Dictionary<string, Type> importedTypes =
+            new Dictionary<string, Type>(); 
 
         static readonly string moduleFolder = "Modules";
 
@@ -51,8 +51,10 @@ namespace Katarnov
                         if (t.Inherits<Entity>())
                         {
                             Console.Write("{0} :", t.Name);
-                            t.GetTypeInfo().GetInheritedBaseTypes().ToList().ForEach(o => Console.Write(" -> {0}", o));
+                            t.GetTypeInfo().GetInheritedBaseTypes().ToList().ForEach(
+                                o => Console.Write(" -> {0}", o));
                             Console.Write("\n");
+                            importedTypes.Add(t.Name, t);
                             Global.gameInstance.entityDatabase.AddEntityType(t);
                         }
                     }
@@ -70,5 +72,13 @@ namespace Katarnov
         }
 
         internal static string ModuleFolderPath { get { return Path.GetFullPath(moduleFolder); } }
+
+        public static Dictionary<string,Type> ImportedTypes
+        {
+            get
+            {
+                return importedTypes;
+            }
+        }
     }
 }

@@ -6,17 +6,21 @@ using System.Threading.Tasks;
 
 namespace Katarnov.Module.Core
 {
-    /*
-    public class Floor : EntityDefine
+    [ByondMapObject(ByondObjectType.Turf, "/turf/simulated/floor")]
+    public class Plating : TurfEntity
+    {
+        public Plating() : base()
+        {
+            spritePath = "Content/Turf/plating.png";
+        }
+    }
+
+    [ByondMapObject(ByondObjectType.Turf, "/turf/simulated/floor/tiled")]
+    public class Floor : TurfEntity
     {
         public Floor() : base()
         {
-            spriteDef = "Content/Turf/steel_dirty.png";
+            spritePath = "Content/Turf/steel_dirty.png";
         }
-    }*/
-
-    public class Floor : Entity
-    {
-        public new string spritePath = "Content/Turf/steel_dirty.png";
     }
 }

@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Katarnov.Module.Python", "Source\Katarnov.Module.Python\Katarnov.Module.Python.pyproj", "{F7939CCF-6E99-4F50-8248-14085AD5A921}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Katarnov.Program", "Source\Katarnov.Program\Katarnov.Program.csproj", "{F8FC6F10-81E8-406F-A95F-A8CC3C712369}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7624118A-694F-49F5-B251-93B67EE8053A} = {7624118A-694F-49F5-B251-93B67EE8053A}
@@ -24,10 +22,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F7939CCF-6E99-4F50-8248-14085AD5A921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7939CCF-6E99-4F50-8248-14085AD5A921}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F7939CCF-6E99-4F50-8248-14085AD5A921}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7939CCF-6E99-4F50-8248-14085AD5A921}.Release|x86.ActiveCfg = Release|Any CPU
 		{F8FC6F10-81E8-406F-A95F-A8CC3C712369}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{F8FC6F10-81E8-406F-A95F-A8CC3C712369}.Debug|x86.ActiveCfg = Debug|x86
 		{F8FC6F10-81E8-406F-A95F-A8CC3C712369}.Debug|x86.Build.0 = Debug|x86

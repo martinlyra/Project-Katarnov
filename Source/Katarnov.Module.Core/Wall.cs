@@ -16,13 +16,12 @@ namespace Katarnov.Module.Core
         }
     }*/
 
-    public class Wall : Entity
+    [ByondMapObject(ByondObjectType.Turf,"/turf/simulated/wall")]
+    public class Wall : TurfEntity
     {
-        public new string spritePath = "Content/Turf/wall.png";
-
-        Wall () : base()
+        public Wall () : base()
         {
-            base.spritePath = spritePath;
+            spritePath = "Content/Turf/wall.png";
         }
     }
 

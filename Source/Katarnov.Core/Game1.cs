@@ -48,6 +48,7 @@ namespace Katarnov
         {
             ModuleManager.Initialize();
             entityDatabase.Initialize();
+            ByondImporter.Initialize();
             // TODO: Add your initialization logic here
             currentMap = Map.FromByondMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
 
@@ -123,7 +124,7 @@ namespace Katarnov
             if (keyState.IsKeyDown(Keys.Left))
                 gameView.position.X -= 1;
             else if (keyState.IsKeyDown(Keys.Right))
-                gameView.position.Y += 1;
+                gameView.position.X += 1;
 
             //Console.WriteLine("{0}",entityManager.entities[0].position);
 

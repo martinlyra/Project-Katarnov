@@ -1,29 +1,42 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Katarnov
 {
-    public class Map
+    public static class ByondImporter
     {
-        public class Tile
+        struct ByondObjectInfo
         {
-            readonly List<Entity> content = new List<Entity>();
+            public string Name;
+            public ByondObjectType Type;
+            public Type RelatedType;
         }
 
-        public Vector2 size;
-        public List<Level> levels = new List<Level>();
+        static readonly List<ByondObjectInfo> byondObjects = new List<ByondObjectInfo>();
 
-        const string wall = "/turf/simulated/wall";
-        const string floor = "/turf/simulated/floor/tiled";
-
-        public static Map FromByondMap(string path)
+        internal static void Initialize()
         {
-            var buffer = File.ReadAllLines(Path.GetFullPath(path)).ToList();
+            var imported = ModuleManager.ImportedTypes
+                .Where(
+                type => type.Value.HasAttribute<ByondMapObjectAttribute>()
+                );
+            foreach (var i in imported)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("{0} has attribute(s)", i);
+                Console.WriteLine(i.Value.TryGetAttribute<ByondMapObjectAttribute>().TypePath);
+                Console.ResetColor();
+            }          
+        }
+
+        internal static Map ImportMap(string path)
+        {
+            /*var buffer = File.ReadAllLines(Path.GetFullPath(path)).ToList();
 
             List<string> floors = new List<string>();
             List<string> walls = new List<string>();
@@ -98,7 +111,7 @@ namespace Katarnov
                 }
                 y++;
             }
-
+            */
             return new Map();
         }
     }

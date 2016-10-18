@@ -52,5 +52,23 @@ namespace Katarnov
                 return default(T);
             }
         }
+
+        public static T TryGetAttribute<T>(this Type type) where T : Attribute
+        {
+            try
+            {
+                return (T)Attribute.GetCustomAttribute(type, typeof(T));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+        }
+
+        public static bool HasAttribute<T>(this Type type) where T : Attribute
+        {
+            return type.TryGetAttribute<T>() != null;
+        }
     }
 }

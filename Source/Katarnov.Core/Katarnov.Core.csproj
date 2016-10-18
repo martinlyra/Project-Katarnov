@@ -87,6 +87,9 @@
   <ItemGroup>
     <Compile Include="ActorObject.cs" />
     <Compile Include="ActorObjectCollection.cs" />
+    <Compile Include="ByondObjectType.cs" />
+    <Compile Include="ByondImporter.cs" />
+    <Compile Include="ByondMapObjectAttribute.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityDatabase.cs" />
     <Compile Include="EntityDefine.cs" />
@@ -107,7 +110,6 @@
     <Compile Include="SpriteBatchRenderer.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Transform.cs" />
-    <Compile Include="TurfObject.cs" />
     <Compile Include="TypeExt.cs" />
     <Compile Include="View.cs" />
   </ItemGroup>

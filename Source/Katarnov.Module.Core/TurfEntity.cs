@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Katarnov
+namespace Katarnov.Module.Core
 {
-    public class TurfObject : ActorObject
+    public class TurfEntity : Entity
     {
-        
+        public TurfEntity() : base()
+        {
+
+        }
     }
 }
