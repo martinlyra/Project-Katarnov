@@ -9,13 +9,13 @@ namespace Katarnov
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class ByondMapObjectAttribute : Attribute
     {
-        private string typePath;
+        private IEnumerable<string> typePaths;
         private ByondObjectType objectType;
 
-        public ByondMapObjectAttribute(ByondObjectType objectType, string typePath)
+        public ByondMapObjectAttribute(ByondObjectType objectType, params string[] typePaths)
         {
             this.objectType = objectType;
-            this.typePath = typePath;
+            this.typePaths = typePaths;
         }
 
         public ByondObjectType ObjectType
@@ -26,11 +26,11 @@ namespace Katarnov
             }
         }
 
-        public string TypePath
+        public IEnumerable<string> TypePath
         {
             get
             {
-                return typePath;
+                return typePaths;
             }
         }
     }

@@ -28,8 +28,11 @@ namespace Katarnov
 
         readonly List<string> spritesToLoad = new List<string>()
         {
+            "Content/Object/lattice.png",
+            "Content/Turf/plating.png",
             "Content/Turf/steel_dirty.png",
-            "Content/Turf/wall.png"
+            "Content/Turf/wall.png",
+            "Content/Turf/wall_reinforced.png"
         };
         readonly Dictionary<string, Sprite> loadedSprites = new Dictionary<string, Sprite>();
 

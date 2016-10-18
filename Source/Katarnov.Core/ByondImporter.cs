@@ -12,9 +12,16 @@ namespace Katarnov
     {
         struct ByondObjectInfo
         {
-            public string Name;
             public ByondObjectType Type;
+            public List<string> TypePaths;
             public Type RelatedType;
+
+            public ByondObjectInfo(Type type, ByondMapObjectAttribute attribute)
+            {
+                RelatedType = type;
+                TypePaths = attribute.TypePath.ToList();
+                Type = attribute.ObjectType;
+            }
         }
 
         static readonly List<ByondObjectInfo> byondObjects = new List<ByondObjectInfo>();
@@ -25,18 +32,22 @@ namespace Katarnov
                 .Where(
                 type => type.Value.HasAttribute<ByondMapObjectAttribute>()
                 );
+
             foreach (var i in imported)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("{0} has attribute(s)", i);
-                Console.WriteLine(i.Value.TryGetAttribute<ByondMapObjectAttribute>().TypePath);
-                Console.ResetColor();
+                byondObjects.Add(
+                    new ByondObjectInfo(i.Value,
+                    i.Value.TryGetAttribute<ByondMapObjectAttribute>())
+                    );
             }          
         }
 
         internal static Map ImportMap(string path)
         {
-            /*var buffer = File.ReadAllLines(Path.GetFullPath(path)).ToList();
+            var buffer = File.ReadAllLines(Path.GetFullPath(path)).ToList();
+
+            var definedTiles = new Dictionary<string, List<ByondObjectInfo>>();
+            //var occurances = new Dictionary<ByondObjectInfo, List<string>>();
 
             List<string> floors = new List<string>();
             List<string> walls = new List<string>();
@@ -48,33 +59,35 @@ namespace Katarnov
             foreach (string str in buffer)
             {
                 bufferLine++;
-                if (str.Contains(floor))
-                {
-                    floors.Add(str.Substring(1, 3));
-                    //Console.WriteLine(str.Substring(1, 3));
-                }
-                else if (str.Contains(wall))
-                {
-                    walls.Add(str.Substring(1, 3));
-                    //Console.WriteLine(str.Substring(1, 3));
-                }
 
-                else if (str.Contains("(1,1,1) = {\""))
+                if (str.Contains("(1,1,1) = {\""))
                 {
                     mapStartLine = bufferLine;
                 }
-                else if (str.Contains("\"}"))
+                else if (str.StartsWith("\"}"))
                 {
                     mapEndLine = bufferLine;
                 }
+                else
+                {
+                    var def = str.Split('(', ',', '{', '}', ')')
+                        .Where(@string => @string.StartsWith("/"));
+
+                    var defList = new List<ByondObjectInfo>();
+
+                    byondObjects.ForEach(item =>
+                    {
+                        foreach (var @string in def)
+                        {
+                            if (item.TypePaths.Contains(@string))
+                                defList.Add(item);
+                        }
+                    });
+
+                    if (defList.Count > 0)
+                        definedTiles.Add(str.Substring(1, 3), defList);
+                }
             }
-
-            Console.WriteLine("Found {0} definiations of Wall in {1}", walls.Count,
-                Path.GetFileName(path));
-            Console.WriteLine("Found {0} definiations of Floor in {1}", floors.Count,
-                Path.GetFileName(path));
-
-            Console.WriteLine("The map starts at {0} and ends at {1}", mapStartLine, mapEndLine);
 
             Map map = new Map();
 
@@ -93,26 +106,19 @@ namespace Katarnov
                 {
                     var tile = mapLine.Substring(0 + (3 * i), 3);
 
-                    if (floors.Contains(tile))
-                    {
-                        var ent = Global.gameInstance.entityDatabase.
-                            GetEntityTypeByName("Floor").InstantizeAs<Entity>();
-                        ent.position.X = x;
-                        ent.position.Y = y;
-                    }
-                    else if (walls.Contains(tile))
-                    {
-                        var ent = Global.gameInstance.entityDatabase.
-                            GetEntityTypeByName("Wall").InstantizeAs<Entity>();
-                        ent.position.X = x;
-                        ent.position.Y = y;
-                    }
+                    if (definedTiles.ContainsKey(tile))
+                        definedTiles[tile].ForEach(type =>
+                        {
+                            var entity = type.RelatedType.InstantizeAs<Entity>();
+                            entity.position.X = x;
+                            entity.position.Y = y;
+                        });
                     x++;
                 }
                 y++;
             }
-            */
-            return new Map();
+            
+            return map;
         }
     }
 }

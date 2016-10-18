@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Katarnov.Module.Core
 {
-    public abstract class TurfEntity : Entity
+    public abstract class ObjectEntity : Entity
     {
-        public TurfEntity() : base()
+        public ObjectEntity() : base()
         {
 
         }

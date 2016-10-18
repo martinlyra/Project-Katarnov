@@ -50,7 +50,8 @@ namespace Katarnov
             entityDatabase.Initialize();
             ByondImporter.Initialize();
             // TODO: Add your initialization logic here
-            currentMap = Map.FromByondMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
+            //currentMap = Map.FromByondMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
+            currentMap = ByondImporter.ImportMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
 
             var ent = entityManager.entities[0];
             var firstPos = ent.position;

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Katarnov.Module.Core
 {
-    [ByondMapObject(ByondObjectType.Turf, "/turf/simulated/floor")]
+    [ByondMapObject(ByondObjectType.Turf, 
+        "/turf/simulated/floor",
+        "/turf/simulated/floor/plating",
+        "/turf/simulated/floor/plating/airless")]
     public class Plating : TurfEntity
     {
         public Plating() : base()

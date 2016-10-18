@@ -25,9 +25,13 @@ namespace Katarnov.Module.Core
         }
     }
 
-    public class WallA : Wall
+    [ByondMapObject(ByondObjectType.Turf, "/turf/simulated/wall/r_wall")]
+    public class WallReinforced : Wall
     {
-        
+        public WallReinforced() : base()
+        {
+            spritePath = "Content/Turf/wall_reinforced.png";
+        }
     }
 
     public class WallB : Wall
