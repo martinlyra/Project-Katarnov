@@ -93,6 +93,8 @@ namespace Katarnov
             renderer = new SpriteBatchRenderer(this);
 
             // TODO: use this.Content to load your game content here
+
+            
         }
 
         /// <summary>

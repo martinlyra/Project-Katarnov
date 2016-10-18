@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Katarnov
 {
+    // Trash!
+
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class ByondMapObjectAttribute : Attribute
     {

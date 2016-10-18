@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Floor.cs" />
+    <Compile Include="Grille.cs" />
     <Compile Include="Lattice.cs" />
     <Compile Include="ObjectEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

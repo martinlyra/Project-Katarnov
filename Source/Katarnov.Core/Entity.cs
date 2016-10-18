@@ -56,5 +56,15 @@ namespace Katarnov
         {
             return enabled || spritePath != null;
         }
+
+        public static IEnumerable<SubTypeInfo> SubTypes
+        {
+            get
+            {
+                return subTypes;
+            }
+        }
+
+        private static IEnumerable<SubTypeInfo> subTypes = new List<SubTypeInfo>();
     }
 }
