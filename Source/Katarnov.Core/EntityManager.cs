@@ -47,5 +47,13 @@ namespace Katarnov
             e.identifier.Assign(_id, e);
             entities.Add(_id, e);
         }
+
+        internal void Reset()
+        {
+            updateQueue.Clear();
+            entities.Clear();
+            nextId = 0;
+            freeIds.Clear();
+        }
     }
 }

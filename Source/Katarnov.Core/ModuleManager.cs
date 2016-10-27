@@ -50,7 +50,11 @@ namespace Katarnov
                         }
                         if (t.Inherits<Entity>())
                         {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write("IMPORT: ");
+                            Console.ForegroundColor = ConsoleColor.White;
                             Console.Write("{0} :", t.Name);
+                            Console.ResetColor();
                             t.GetTypeInfo().GetInheritedBaseTypes().ToList().ForEach(
                                 o => Console.Write(" -> {0}", o));
                             Console.Write("\n");

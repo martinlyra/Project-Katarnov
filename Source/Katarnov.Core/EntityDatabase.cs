@@ -48,7 +48,7 @@ namespace Katarnov
         public bool AddEntityType(Type entityType)
         {
             typeDatabase.Add(entityType.Name, entityType);
-            Console.WriteLine("Added {0} to imported types", entityType.Name);
+            //Console.WriteLine("Added {0} to imported types", entityType.Name);
             return true;
         }
 

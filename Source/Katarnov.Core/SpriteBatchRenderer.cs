@@ -26,14 +26,6 @@ namespace Katarnov
 
         readonly Queue<DrawCall> drawQueue = new Queue<DrawCall>();
 
-        readonly List<string> spritesToLoad = new List<string>()
-        {
-            "Content/Object/lattice.png",
-            "Content/Turf/plating.png",
-            "Content/Turf/steel_dirty.png",
-            "Content/Turf/wall.png",
-            "Content/Turf/wall_reinforced.png"
-        };
         readonly Dictionary<string, Sprite> loadedSprites = new Dictionary<string, Sprite>();
 
         readonly Game1 _game;
@@ -43,17 +35,6 @@ namespace Katarnov
             _game = game;
 
             spriteBatch = new SpriteBatch(_game.GraphicsDevice);
-
-            InstantizeSprites();
-        }
-
-        void InstantizeSprites()
-        {
-            foreach (var file in spritesToLoad)
-                loadedSprites.Add(file, Sprite.LoadFile(
-                        spriteBatch.GraphicsDevice,
-                        file
-                    ));
         }
 
         public void QueryForDrawing()
@@ -64,8 +45,8 @@ namespace Katarnov
             {
                 if (o.ShouldDraw())
                     drawQueue.Enqueue(new DrawCall(
-                            new Vector3(o.position.X,o.position.Y, o.position.Z),
-                            loadedSprites[o.spritePath]
+                            new Vector3(o.position.X, o.position.Y, o.position.Z),
+                            Assets.GetSprite(o.spritePath)
                         ));
             }
         }

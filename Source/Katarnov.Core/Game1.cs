@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using System.Threading;
 
 namespace Katarnov
 {
@@ -20,10 +22,12 @@ namespace Katarnov
 
         internal EntityDatabase entityDatabase;
 
-        public Map currentMap;
+        public Map currentMap = null;
         public EntityManager entityManager;
 
         public View gameView = new View();
+
+        public static bool HasLoaded = false;
 
         public Game1()
         {
@@ -51,15 +55,6 @@ namespace Katarnov
             ByondImporter.Initialize();
             // TODO: Add your initialization logic here
             //currentMap = Map.FromByondMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
-            currentMap = ByondImporter.ImportMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
-
-            var ent = entityManager.entities[0];
-            var firstPos = ent.position;
-            gameView.position.X = firstPos.X;
-            gameView.position.Y = firstPos.Y;
-            //gameView.position.Z = firstPos.Z;
-
-            Console.WriteLine("Sprite path for {1}: {0}", ent.spritePath, ent.GetType().Name);
 
             /*
             Sprite floorSprite = Sprite.LoadFile(GraphicsDevice, 
@@ -77,7 +72,7 @@ namespace Katarnov
                         new ActorObject(floorSprite, new Vector3(x, y, 0));
                 }
             }*/
-
+ 
             base.Initialize();
         }
 
@@ -92,9 +87,9 @@ namespace Katarnov
 
             renderer = new SpriteBatchRenderer(this);
 
-            // TODO: use this.Content to load your game content here
+            new Thread(Assets.ImportSprites).Start();
 
-            
+            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -115,25 +110,38 @@ namespace Katarnov
         {
             Time.deltaTime = gameTime.ElapsedGameTime.Milliseconds;
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed 
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed
                 || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            var keyState = Keyboard.GetState();
-            if (keyState.IsKeyDown(Keys.Up))
-                gameView.position.Y -= 1;
-            else if (keyState.IsKeyDown(Keys.Down))
-                gameView.position.Y += 1;
-            if (keyState.IsKeyDown(Keys.Left))
-                gameView.position.X -= 1;
-            else if (keyState.IsKeyDown(Keys.Right))
-                gameView.position.X += 1;
+            if (HasLoaded)
+            {
+                if (currentMap == null)
+                {
+                    currentMap = ByondImporter.ImportMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
+                    var ent = entityManager.entities[0];
+                    var firstPos = ent.position;
+                    gameView.position.X = firstPos.X;
+                    gameView.position.Y = firstPos.Y;
+                    //gameView.position.Z = firstPos.Z;
+                }
 
-            //Console.WriteLine("{0}",entityManager.entities[0].position);
+                var keyState = Keyboard.GetState();
+                if (keyState.IsKeyDown(Keys.Up))
+                    gameView.position.Y -= 1;
+                else if (keyState.IsKeyDown(Keys.Down))
+                    gameView.position.Y += 1;
+                if (keyState.IsKeyDown(Keys.Left))
+                    gameView.position.X -= 1;
+                else if (keyState.IsKeyDown(Keys.Right))
+                    gameView.position.X += 1;
 
-            entityManager.QueryForUpdate();
+                //Console.WriteLine("{0}",entityManager.entities[0].position);
 
-            entityManager.ProcessUpdate();
+                entityManager.QueryForUpdate();
+
+                entityManager.ProcessUpdate();
+            }
 
             base.Update(gameTime);
         }
@@ -146,9 +154,12 @@ namespace Katarnov
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            renderer.QueryForDrawing();
+            if (HasLoaded)
+            {
+                renderer.QueryForDrawing();
 
-            renderer.ProcessDrawing();
+                renderer.ProcessDrawing();
+            }
 
             base.Draw(gameTime);
         }
