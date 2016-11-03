@@ -31,6 +31,16 @@ namespace Katarnov.Module.Core.Turf
     }
 
     [ByondMapObject(ByondObjectType.Turf,
+        "/turf/simulated/floor/tiled/steel")]
+    public class SteelFloor : TurfEntity
+    {
+        public SteelFloor() : base()
+        {
+            spritePath = "Content/Turf/steel_dirty.png";
+        }
+    }
+
+    [ByondMapObject(ByondObjectType.Turf,
         "/turf/simulated/floor/wood")]
     public class WoodenFloor : TurfEntity
     {

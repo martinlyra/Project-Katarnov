@@ -7,24 +7,28 @@ using System.Threading.Tasks;
 
 namespace Katarnov
 {
-    public class EntityManager
+    public static class EntityManager
     {
-        public readonly Dictionary<uint, Entity> entities = new Dictionary<uint, Entity>();
+        public static readonly Dictionary<uint, Entity> entities = new Dictionary<uint, Entity>();
 
+        static readonly Queue<Entity> updateQueue = new Queue<Entity>();
 
-        readonly Queue<Entity> updateQueue = new Queue<Entity>();
+        static uint nextId = 0;
+        static readonly List<uint> freeIds = new List<uint>();
 
-        uint nextId = 0;
-        readonly List<uint> freeIds = new List<uint>();
+        static Game1 _game;
 
-        readonly Game1 _game;
-
-        public EntityManager(Game1 game)
+        internal static void Initialize(Game1 game)
         {
             _game = game;
         }
 
-        public void QueryForUpdate()
+        public static void PopulateEvents()
+        {
+
+        }
+
+        public static void QueryForUpdate()
         {
             updateQueue.Clear(); // just to make sure
 
@@ -35,20 +39,20 @@ namespace Katarnov
             }
         }
 
-        public void ProcessUpdate()
+        public static void ProcessUpdate()
         {
             while (updateQueue.Count > 0)
                 updateQueue.Dequeue().Update();
         }
 
-        public void Add(Entity e)
+        public static void Add(Entity e)
         {
             uint _id = nextId++;
             e.identifier.Assign(_id, e);
             entities.Add(_id, e);
         }
 
-        internal void Reset()
+        internal static void Reset()
         {
             updateQueue.Clear();
             entities.Clear();

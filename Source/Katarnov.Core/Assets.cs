@@ -37,7 +37,7 @@ namespace Katarnov
                     }
                 }
                 );
-            Global.gameInstance.entityManager.Reset();
+            EntityManager.Reset();
             Game1.HasLoaded = true;
         }
 

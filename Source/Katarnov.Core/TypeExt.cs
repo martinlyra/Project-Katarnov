@@ -8,6 +8,16 @@ namespace Katarnov
 {
     public static class TypeExt
     {
+        public static bool Implements(this Type type, Type interfaceType)
+        {
+            return type.GetInterface(interfaceType.Name) != null;   
+        }
+
+        public static bool Implements<T>(this Type type)
+        {
+            return type.Implements(typeof(T));
+        }
+
         public static bool Inherits(this Type type, Type targetBaseType)
         {
             var baseType = type.BaseType;

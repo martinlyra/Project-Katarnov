@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -23,18 +24,18 @@ namespace Katarnov
         internal EntityDatabase entityDatabase;
 
         public Map currentMap = null;
-        public EntityManager entityManager;
 
         public View gameView = new View();
 
         public static bool HasLoaded = false;
+
+        public Entity playerCharacter;
 
         public Game1()
         {
             Global.gameInstance = this;
 
             graphics = new GraphicsDeviceManager(this);
-            entityManager = new EntityManager(this);
             entityDatabase = new EntityDatabase(this);
 
             Content.RootDirectory = "Content";
@@ -50,6 +51,8 @@ namespace Katarnov
         /// </summary>
         protected override void Initialize()
         {
+            EntityManager.Initialize(this);
+
             Assets.Initialize();
             ModuleManager.Initialize();
             entityDatabase.Initialize();
@@ -120,31 +123,53 @@ namespace Katarnov
                 if (currentMap == null)
                 {
                     currentMap = ByondImporter.ImportMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
-                    var ent = entityManager.entities[0];
+                    var ent = EntityManager.entities[0];
                     var firstPos = ent.position;
                     gameView.position.X = firstPos.X;
                     gameView.position.Y = firstPos.Y;
                     //gameView.position.Z = firstPos.Z;
+                    playerCharacter = ModuleManager.FirstModule.Interface.SpawnDefault();
+                    playerCharacter.position.X = firstPos.X;
+                    playerCharacter.position.Y = firstPos.Y;
                 }
 
-                var keyState = Keyboard.GetState();
-                if (keyState.IsKeyDown(Keys.Up))
-                    gameView.position.Y -= 1;
-                else if (keyState.IsKeyDown(Keys.Down))
-                    gameView.position.Y += 1;
-                if (keyState.IsKeyDown(Keys.Left))
-                    gameView.position.X -= 1;
-                else if (keyState.IsKeyDown(Keys.Right))
-                    gameView.position.X += 1;
+                Input.Update();
 
-                //Console.WriteLine("{0}",entityManager.entities[0].position);
+                UpdatePlayer();
 
-                entityManager.QueryForUpdate();
+                EntityManager.PopulateEvents();
 
-                entityManager.ProcessUpdate();
+                EntityManager.QueryForUpdate();
+
+                EntityManager.ProcessUpdate();
             }
 
             base.Update(gameTime);
+        }
+
+        private void UpdatePlayer()
+        {
+            var keyState = Keyboard.GetState();
+            if (keyState.IsKeyDown(Keys.Up))
+            {
+                playerCharacter.position.Y -= 1;
+                gameView.position.Y -= 1;
+            }
+            else if (keyState.IsKeyDown(Keys.Down))
+            {
+                playerCharacter.position.Y += 1;
+                gameView.position.Y += 1;
+            }
+            if (keyState.IsKeyDown(Keys.Left))
+            {
+                playerCharacter.position.X -= 1;
+                gameView.position.X -= 1;
+            }
+            else if (keyState.IsKeyDown(Keys.Right))
+            {
+                playerCharacter.position.X += 1;
+                gameView.position.X += 1;
+            }
         }
 
         /// <summary>

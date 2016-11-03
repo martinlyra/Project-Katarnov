@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreModule.cs" />
+    <Compile Include="LogicTest.cs" />
     <Compile Include="Mob\PrimitiveHuman.cs" />
     <Compile Include="Object\Table.cs" />
     <Compile Include="Turf\Floor.cs" />

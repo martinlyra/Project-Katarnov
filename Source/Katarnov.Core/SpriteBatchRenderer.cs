@@ -30,18 +30,21 @@ namespace Katarnov
 
         readonly Game1 _game;
 
+        Vector2 center;
+
         public SpriteBatchRenderer(Game1 game)
         {
             _game = game;
 
             spriteBatch = new SpriteBatch(_game.GraphicsDevice);
+            CalculateCenter();
         }
 
         public void QueryForDrawing()
         {
             drawQueue.Clear();
 
-            foreach (var o in _game.entityManager.entities.Values)
+            foreach (var o in EntityManager.entities.Values)
             {
                 if (o.ShouldDraw())
                     drawQueue.Enqueue(new DrawCall(
@@ -59,6 +62,15 @@ namespace Katarnov
                 );
         }
 
+        protected void CalculateCenter()
+        {
+            var center = _game.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
+            this.center = new Vector2(
+                    -center.X + 16,
+                    -center.Y + 16
+                );
+        }
+
         public void ProcessDrawing()
         {
             spriteBatch.Begin();
@@ -66,8 +78,9 @@ namespace Katarnov
             {
                 var dCall = drawQueue.Dequeue();
                 spriteBatch.Draw(
-                    texture:    dCall.sprite.texture,
-                    position:   DrawPosition(dCall),
+                    texture: dCall.sprite.texture,
+                    position: DrawPosition(dCall),
+                    origin: center,
                     color:      Color.White
                     );
             }

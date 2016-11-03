@@ -12,5 +12,7 @@ namespace Katarnov.Module
         string Name { get; }
         string Description { get; }
         string Version { get; }
+
+        Entity SpawnDefault();
     }
 }

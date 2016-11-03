@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Katarnov.Program", "Source\Katarnov.Program\Katarnov.Program.csproj", "{F8FC6F10-81E8-406F-A95F-A8CC3C712369}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -13,6 +13,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Katarnov.Module.Core", "Source\Katarnov.Module.Core\Katarnov.Module.Core.csproj", "{7624118A-694F-49F5-B251-93B67EE8053A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Katarnov.Core", "Source\Katarnov.Core\Katarnov.Core.csproj", "{24993E6D-E8EC-418C-83C4-68DE5951D6E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A68BC6A-A35F-41CC-B876-3D1E672F218B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

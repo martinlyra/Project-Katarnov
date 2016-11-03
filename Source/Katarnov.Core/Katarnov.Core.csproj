@@ -87,10 +87,12 @@
   <ItemGroup>
     <Compile Include="ActorObject.cs" />
     <Compile Include="ActorObjectCollection.cs" />
+    <Compile Include="AssemblyExt.cs" />
     <Compile Include="Assets.cs" />
     <Compile Include="ByondObjectType.cs" />
     <Compile Include="ByondImporter.cs" />
     <Compile Include="ByondMapObjectAttribute.cs" />
+    <Compile Include="DefaultObjectAttribute.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityDatabase.cs" />
     <Compile Include="EntityDefine.cs" />

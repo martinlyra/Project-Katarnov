@@ -46,7 +46,7 @@ namespace Katarnov
 
         public Entity()
         {
-            Global.gameInstance.entityManager.Add(this);
+            EntityManager.Add(this);
         }
 
         public virtual void Initialize()
