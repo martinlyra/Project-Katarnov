@@ -31,6 +31,7 @@ namespace Katarnov
         readonly Game1 _game;
 
         Vector2 center;
+        Vector2 scale = new Vector2(2.0f);
 
         public SpriteBatchRenderer(Game1 game)
         {
@@ -56,24 +57,26 @@ namespace Katarnov
 
         protected Vector2 DrawPosition(DrawCall call)
         {
-            return new Vector2(
+            return Vector2.Multiply(new Vector2(
                 (call.position.X - _game.gameView.position.X)* 32, 
                 (call.position.Y - _game.gameView.position.Y)* 32
+                ),
+                scale
                 );
         }
 
         protected void CalculateCenter()
         {
             var center = _game.GraphicsDevice.Viewport.Bounds.Center.ToVector2();
-            this.center = new Vector2(
+            this.center = Vector2.Divide(new Vector2(
                     -center.X + 16,
                     -center.Y + 16
-                );
+                ),scale);
         }
 
         public void ProcessDrawing()
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             while (drawQueue.Count > 0)
             {
                 var dCall = drawQueue.Dequeue();
@@ -81,6 +84,7 @@ namespace Katarnov
                     texture: dCall.sprite.texture,
                     position: DrawPosition(dCall),
                     origin: center,
+                    scale: scale,
                     color:      Color.White
                     );
             }

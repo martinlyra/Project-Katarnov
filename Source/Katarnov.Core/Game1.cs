@@ -11,6 +11,10 @@ using System.Threading;
 
 namespace Katarnov
 {
+    /// TODO: Implement networking (member)
+    /// TODO: Event handling to pass to module subroutines
+
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
@@ -57,25 +61,6 @@ namespace Katarnov
             ModuleManager.Initialize();
             entityDatabase.Initialize();
             ByondImporter.Initialize();
-            // TODO: Add your initialization logic here
-            //currentMap = Map.FromByondMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
-
-            /*
-            Sprite floorSprite = Sprite.LoadFile(GraphicsDevice, 
-                entityDatabase.GetDefine("Floor").spriteDef);
-            Sprite wallSprite = Sprite.LoadFile(GraphicsDevice, 
-                entityDatabase.GetDefine("Wall").spriteDef);
-
-            for (int x = 0; x < 12; x++)
-            {
-                for (int y = 0; y < 12; y++)
-                {
-                    if (x == 0 || x == 11 || y == 0 || y == 11)
-                        new ActorObject(wallSprite, new Vector3(x, y, 0));
-                    else
-                        new ActorObject(floorSprite, new Vector3(x, y, 0));
-                }
-            }*/
  
             base.Initialize();
         }
