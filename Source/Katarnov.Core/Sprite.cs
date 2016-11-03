@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,13 +28,21 @@ namespace Katarnov
 
         public static Sprite LoadFile(GraphicsDevice device, string file)
         {
-            FileStream fileStream = new FileStream(file, FileMode.Open);
-            Texture2D spriteAtlas = Texture2D.FromStream(device, fileStream);
-            fileStream.Dispose();
+            try
+            {
+                FileStream fileStream = new FileStream(file, FileMode.Open);
+                Texture2D spriteAtlas = Texture2D.FromStream(device, fileStream);
+                fileStream.Dispose();
 
-            Debug.Assert(spriteAtlas != null);
+                Debug.Assert(spriteAtlas != null);
 
-            return new Sprite(spriteAtlas);
+                return new Sprite(spriteAtlas);
+            }
+            catch
+            {
+                return new Sprite(Texture2DExt.AsColorRectangle(
+                    new Rectangle(0,0,32,32), Color.Blue));
+            }
         }
 
         /*

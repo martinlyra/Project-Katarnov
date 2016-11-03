@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,12 @@ namespace Katarnov
         private const string modulesDirectory = "Modules";
 
         private static readonly Dictionary<string, Sprite> loadedSprites = new Dictionary<string, Sprite>();
+
+        internal static void Initialize()
+        {
+            loadedSprites.Add("err_missing",
+                new Sprite(Texture2DExt.AsColorRectangle(new Rectangle(0,0,32,32), Color.Purple)));
+        }
 
         internal static void ImportSprites()
         {
@@ -35,7 +43,8 @@ namespace Katarnov
 
         internal static Sprite GetSprite(string name)
         {
-            return loadedSprites[name];
+            try     { return loadedSprites[name]; }
+            catch   { return loadedSprites["err_missing"]; }
         }
 
         internal static Dictionary<string, Sprite> ImportedSprites

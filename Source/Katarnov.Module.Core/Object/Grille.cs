@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Katarnov.Module.Core
+namespace Katarnov.Module.Core.Object
 {
     [ByondMapObject(ByondObjectType.Object, "/obj/structure/grille")]
     public class Grille : ObjectEntity

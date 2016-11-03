@@ -100,6 +100,7 @@
     <Compile Include="Global.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IModule.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="IType.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Map.cs" />
@@ -108,7 +109,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PythonManager.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="SpriteAtlas.cs" />
     <Compile Include="SpriteBatchRenderer.cs" />
+    <Compile Include="TexExt.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Transform.cs" />
     <Compile Include="TypeExt.cs" />

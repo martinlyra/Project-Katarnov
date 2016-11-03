@@ -50,6 +50,7 @@ namespace Katarnov
         /// </summary>
         protected override void Initialize()
         {
+            Assets.Initialize();
             ModuleManager.Initialize();
             entityDatabase.Initialize();
             ByondImporter.Initialize();
@@ -152,6 +153,7 @@ namespace Katarnov
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             if (HasLoaded)

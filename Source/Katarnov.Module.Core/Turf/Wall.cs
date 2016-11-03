@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Katarnov;
 
-namespace Katarnov.Module.Core
+namespace Katarnov.Module.Core.Turf
 {
     /*public class Wall : EntityDefine
     {
@@ -32,10 +32,5 @@ namespace Katarnov.Module.Core
         {
             spritePath = "Content/Turf/wall_reinforced.png";
         }
-    }
-
-    public class WallB : Wall
-    {
-
     }
 }

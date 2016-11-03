@@ -18,6 +18,7 @@ namespace Katarnov
             new Dictionary<string, Type>(); 
 
         static readonly string moduleFolder = "Modules";
+        static readonly string developmentModuleFolder = "../../Modules";
 
         internal static void Initialize()
         {
@@ -26,12 +27,20 @@ namespace Katarnov
 
             List<string> files = Directory.GetFiles(moduleFolder).ToList();
 
+# if (DEBUG)
+            foreach (var m in Directory.GetFiles(developmentModuleFolder))
+                files.Add(m);
+# endif
+
             foreach (string file in files)
             {
                 try
                 {
-                    if (Path.GetFileNameWithoutExtension(file) == "Katarnov.Module" 
-                        || Path.GetExtension(file) != ".dll")
+                    var dllName = Path.GetFileNameWithoutExtension(file);
+
+                    if (Path.GetExtension(file) != ".dll"
+                        || !dllName.Contains("Module")
+                        || dllName == "Katarnov.Module")
                         continue;
 
                     Assembly assembly = Assembly.LoadFrom(file);
