@@ -23,6 +23,11 @@ namespace Katarnov
             _game = game;
         }
 
+        public static IEnumerable<T> GetInstancesOf<T>() where T : Entity
+        {
+            return entities.Values.Where(e => e is T).Cast<T>();
+        }
+
         public static void PopulateEvents()
         {
 

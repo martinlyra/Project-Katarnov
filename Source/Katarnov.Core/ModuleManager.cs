@@ -72,6 +72,12 @@ namespace Katarnov
         {
             Scan();
 
+            LoadModules();
+            InitializeModules();
+        }
+
+        internal static void LoadModules()
+        {
             foreach (var ass in moduleList.Values)
             {
                 try
@@ -116,9 +122,13 @@ namespace Katarnov
             }
         }
 
-        internal static void LoadModules()
+        internal static void InitializeModules()
         {
-
+            foreach (IModule mod in moduleList.Values.Select(kvp => kvp.Key.Interface))
+            {
+                World.OnInitialize += mod.OnWorldInitialize;
+                World.OnReady += mod.OnWorldReady;   
+            }
         }
 
         internal static string ModuleFolderPath { get { return Path.GetFullPath(moduleFolder); } }

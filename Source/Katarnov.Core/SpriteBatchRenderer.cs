@@ -31,7 +31,7 @@ namespace Katarnov
         readonly Game1 _game;
 
         Vector2 center;
-        Vector2 scale = new Vector2(2.0f);
+        Vector2 scale = new Vector2(1.0f);
 
         public SpriteBatchRenderer(Game1 game)
         {
@@ -49,7 +49,7 @@ namespace Katarnov
             {
                 if (o.ShouldDraw())
                     drawQueue.Enqueue(new DrawCall(
-                            new Vector3(o.position.X, o.position.Y, o.position.Z),
+                            new Vector3(o.position.Xf, o.position.Yf, o.position.Zf),
                             Assets.GetSprite(o.spritePath)
                         ));
             }

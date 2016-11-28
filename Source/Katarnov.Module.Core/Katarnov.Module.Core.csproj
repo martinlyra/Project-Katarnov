@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Katarnov.Module.Core</RootNamespace>
     <AssemblyName>Katarnov.Module.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -44,6 +44,8 @@
     <Compile Include="CoreModule.cs" />
     <Compile Include="LogicTest.cs" />
     <Compile Include="Mob\PrimitiveHuman.cs" />
+    <Compile Include="LandmarkEntity.cs" />
+    <Compile Include="Landmark\SpawnLandmark.cs" />
     <Compile Include="Object\Table.cs" />
     <Compile Include="Turf\Floor.cs" />
     <Compile Include="Object\Grille.cs" />

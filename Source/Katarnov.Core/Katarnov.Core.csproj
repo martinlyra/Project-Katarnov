@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Katarnov</RootNamespace>
     <AssemblyName>Katarnov.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -45,6 +45,10 @@
     </Reference>
     <Reference Include="IronPython.Wpf, Version=2.7.5.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\IronPython.2.7.5\lib\Net45\IronPython.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lidgren.Network, Version=2012.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Lidgren.Network.1.0.2\lib\net451\Lidgren.Network.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
@@ -85,19 +89,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActorObject.cs" />
-    <Compile Include="ActorObjectCollection.cs" />
     <Compile Include="AssemblyExt.cs" />
     <Compile Include="Assets.cs" />
+    <Compile Include="ByondObjectInstanceArgs.cs" />
     <Compile Include="ByondObjectType.cs" />
     <Compile Include="ByondImporter.cs" />
     <Compile Include="ByondMapObjectAttribute.cs" />
+    <Compile Include="ByondTypePath.cs" />
     <Compile Include="DefaultObjectAttribute.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityDatabase.cs" />
     <Compile Include="EntityDefine.cs" />
     <Compile Include="EntityIdentifier.cs" />
+    <Compile Include="EntityInstanceArgs.cs" />
     <Compile Include="EntityManager.cs" />
+    <Compile Include="EventManager.cs" />
+    <Compile Include="Events\WorldInitializeEventArgs.cs" />
+    <Compile Include="Events\WorldReadyEventArgs.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="IEntity.cs" />
@@ -108,6 +116,7 @@
     <Compile Include="Map.cs" />
     <Compile Include="ModuleInfo.cs" />
     <Compile Include="ModuleManager.cs" />
+    <Compile Include="Network\NetworkMember.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PythonManager.cs" />
     <Compile Include="Sprite.cs" />
@@ -118,6 +127,7 @@
     <Compile Include="Transform.cs" />
     <Compile Include="TypeExt.cs" />
     <Compile Include="View.cs" />
+    <Compile Include="World.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Katarnov.Module\Katarnov.Module.csproj">
@@ -128,6 +138,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

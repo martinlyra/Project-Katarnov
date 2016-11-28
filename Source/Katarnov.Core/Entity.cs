@@ -29,7 +29,7 @@ namespace Katarnov
         public EntityDefine defineInfo;
         public EntityDefine overrideDefineInfo;
 
-        public Vector3 position;
+        public Transform position;
         public Vector2 bounds;
 
         // TODO: This thing isn't in use, make it useful, someday
@@ -46,7 +46,18 @@ namespace Katarnov
 
         public Entity()
         {
+            position = Transform.Zero();
             EntityManager.Add(this);
+        }
+
+        public Entity(EntityInstanceArgs args) : this()
+        {
+            PostConstruct(args);
+        }
+
+        public virtual void PostConstruct(EntityInstanceArgs args)
+        {
+
         }
 
         public virtual void Initialize()
@@ -88,6 +99,11 @@ namespace Katarnov
         }
 
         public virtual void MoveTo(Vector3 destination)
+        {
+
+        }
+
+        public virtual void MoveTo(Transform destination)
         {
 
         }

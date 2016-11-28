@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace Katarnov
 {
-    class EntityCollection : List<Entity>
+    public class EntityInstanceArgs
     {
-        public new void Add(Entity actorObject)
-        {
-            base.Add(actorObject);
-        }
     }
 }

@@ -8,17 +8,70 @@ namespace Katarnov.Module.Core.Turf
 {
 
     [ByondMapObject(ByondObjectType.Turf,
-        "/turf/simulated/floor",
-        "/turf/simulated/floor/airless",
-        "/turf/simulated/floor/plating")]
-    public class Plating : TurfEntity
+        "/turf/simulated/floor")]
+    public class Floor : TurfEntity
     {
-        public Plating() : base()
+        Flooring flooring;
+
+        public Floor() : base()
         {
             spritePath = "Content/Turf/plating.png";
         }
-    }
 
+        public override void PostConstruct(EntityInstanceArgs args)
+        {
+            base.PostConstruct(args);
+
+            ByondObjectInstanceArgs bargs = (ByondObjectInstanceArgs)args;
+            string ext = bargs.TypePath.Extension;
+
+            switch (ext)
+            {
+                case ("/reinforced"):
+                    {
+                        spritePath = "Content/Turf/floor_reinforced.png";
+                        break;
+                    }
+                case ("/tiled"):
+                    {
+                        spritePath = "Content/Turf/floor_steel.png";
+                        break;
+                    }
+                case ("/tiled/dark"):
+                    {
+                        spritePath = "Content/Turf/floor_dark.png";
+                        break;
+                    }
+                case ("/tiled/white"):
+                    {
+                        spritePath = "Content/Turf/floor_white.png";
+                        break;
+                    }
+                case ("/carpet"):
+                    {
+                        spritePath = "Content/Turf/floor_carpet.png";
+                        break;
+                    }
+                case ("/carpet/blue"):
+                    {
+                        spritePath = "Content/Turf/floor_carpet_blue.png";
+                        break;
+                    }
+                case ("/lino"):
+                    {
+                        spritePath = "Content/Turf/floor_linoleum.png";
+                        break;
+                    }
+                case ("/wood"):
+                    {
+                        spritePath = "Content/Turf/floor_wood.png";
+                        break;
+                    }
+            }   
+        }
+    }
+    
+    /*
     [ByondMapObject(ByondObjectType.Turf, 
         "/turf/simulated/floor/tiled",
         "/turf/simulared/floor/tiled/airless")]
@@ -110,4 +163,5 @@ namespace Katarnov.Module.Core.Turf
             spritePath = "Content/Turf/floor_reinforced.png";
         }
     }
+    */
 }

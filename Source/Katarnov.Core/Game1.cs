@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Katarnov.Module;
+using Katarnov.Network;
+using Katarnov.Events;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -24,6 +27,8 @@ namespace Katarnov
         SpriteBatchRenderer renderer;
 
         ContentManager contentManager;
+
+        NetworkMember network;
 
         internal EntityDatabase entityDatabase;
 
@@ -108,14 +113,14 @@ namespace Katarnov
                 if (currentMap == null)
                 {
                     currentMap = ByondImporter.ImportMap(@"Content\Import\BYOND\Map\exodus-1.dmm");
-                    var ent = EntityManager.entities[0];
+
+                    World.Ready();
+                    /*var ent = EntityManager.entities[0];
                     var firstPos = ent.position;
-                    gameView.position.X = firstPos.X;
-                    gameView.position.Y = firstPos.Y;
+                    gameView.position.X = firstPos.Xf;
+                    gameView.position.Y = firstPos.Yf;
                     //gameView.position.Z = firstPos.Z;
-                    playerCharacter = ModuleManager.FirstModule.Interface.SpawnDefault();
-                    playerCharacter.position.X = firstPos.X;
-                    playerCharacter.position.Y = firstPos.Y;
+                    */
                 }
 
                 Input.Update();
@@ -138,23 +143,20 @@ namespace Katarnov
             if (keyState.IsKeyDown(Keys.Up))
             {
                 playerCharacter.position.Y -= 1;
-                gameView.position.Y -= 1;
             }
             else if (keyState.IsKeyDown(Keys.Down))
             {
                 playerCharacter.position.Y += 1;
-                gameView.position.Y += 1;
             }
             if (keyState.IsKeyDown(Keys.Left))
             {
                 playerCharacter.position.X -= 1;
-                gameView.position.X -= 1;
             }
             else if (keyState.IsKeyDown(Keys.Right))
             {
                 playerCharacter.position.X += 1;
-                gameView.position.X += 1;
             }
+            gameView.position = (Vector3)playerCharacter.position;
         }
 
         /// <summary>

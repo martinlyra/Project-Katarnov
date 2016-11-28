@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -79,6 +80,16 @@ namespace Katarnov
         public static bool HasAttribute<T>(this Type type) where T : Attribute
         {
             return type.TryGetAttribute<T>() != null;
+        }
+
+        public static bool HasMethod(this Type type, MethodInfo method)
+        {
+            return type.GetMethod(method.Name) != null;
+        }
+
+        public static bool HasMethod(this Type type, Action method)
+        {
+            return type.HasMethod(method.Method);
         }
     }
 }

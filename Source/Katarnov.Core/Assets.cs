@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,6 +20,15 @@ namespace Katarnov
         {
             loadedSprites.Add("err_missing",
                 new Sprite(Texture2DExt.AsColorRectangle(new Rectangle(0,0,32,32), Color.Purple)));
+
+            foreach (var f in Directory.EnumerateFiles(@"Content\Turf"))
+            {
+                var file = f;
+                loadedSprites.Add(file.Replace('\\','/'), Sprite.LoadFile(Global.gameInstance.GraphicsDevice, file));
+            }
+
+            foreach (var f in loadedSprites)
+                Console.WriteLine(f.Key);
         }
 
         internal static void ImportSprites()
@@ -30,6 +40,8 @@ namespace Katarnov
                     if (t.Inherits<Entity>() && !t.IsAbstract)
                     {
                         var e = t.InstantizeAs<Entity>();
+                        if (e.spritePath == null)
+                            return;
                         if (!loadedSprites.ContainsKey(e.spritePath))
                             loadedSprites.Add(e.spritePath, Sprite.LoadFile
                                 (Global.gameInstance.GraphicsDevice, e.spritePath)
@@ -44,7 +56,14 @@ namespace Katarnov
         internal static Sprite GetSprite(string name)
         {
             try     { return loadedSprites[name]; }
-            catch   { return loadedSprites["err_missing"]; }
+            catch (Exception e)  { PrintTrace(name); return loadedSprites["err_missing"]; }
+        }
+
+        internal static void PrintTrace(string name)
+        {
+            foreach (var i in loadedSprites)
+                Console.WriteLine(i.Key);
+            Console.WriteLine($">> {name}");
         }
 
         internal static Dictionary<string, Sprite> ImportedSprites
