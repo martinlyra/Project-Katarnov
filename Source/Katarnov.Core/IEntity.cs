@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Katarnov.Module
 {
-    public interface IEntity 
+    public interface IEntity : IUpdatable
     {
         void Initialize();
 
-        void Update();
+        // void Update();
         void Draw();
 
         bool NeedsUpdate();

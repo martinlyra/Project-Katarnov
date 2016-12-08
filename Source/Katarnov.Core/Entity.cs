@@ -85,7 +85,6 @@ namespace Katarnov
             return enabled || spritePath != null;
         }
 
-
         // For quaternion rotations (true rotation)
         public virtual void LookAt()
         {

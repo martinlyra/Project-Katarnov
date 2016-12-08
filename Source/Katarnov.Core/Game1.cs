@@ -23,12 +23,16 @@ namespace Katarnov
     /// </summary>
     public class Game1 : Game
     {
+        private static readonly Version version = Assembly.GetEntryAssembly().GetName().Version;
+
         GraphicsDeviceManager graphics;
         SpriteBatchRenderer renderer;
 
         ContentManager contentManager;
 
         NetworkMember network;
+
+        ProgramArgs args;
 
         internal EntityDatabase entityDatabase;
 
@@ -40,9 +44,21 @@ namespace Katarnov
 
         public Entity playerCharacter;
 
-        public Game1()
+        public static Version Version
+        {
+            get
+            {
+                return version;
+            }
+        }
+
+        public Game1(ProgramArgs args = new ProgramArgs())
         {
             Global.gameInstance = this;
+            this.args = args;
+
+            if (this.args.ServerMode)
+                Console.WriteLine("ServerMode argument found");
 
             graphics = new GraphicsDeviceManager(this);
             entityDatabase = new EntityDatabase(this);
@@ -60,14 +76,31 @@ namespace Katarnov
         /// </summary>
         protected override void Initialize()
         {
-            EntityManager.Initialize(this);
+            if (!args.Headless)
+            {
+                Assets.Initialize();
+            }
+            if (args.ServerMode)
+            {
+                EntityManager.Initialize(this);
+                ModuleManager.Initialize();
+                entityDatabase.Initialize();
+                ByondImporter.Initialize();
+            }
 
-            Assets.Initialize();
-            ModuleManager.Initialize();
-            entityDatabase.Initialize();
-            ByondImporter.Initialize();
- 
+            NetworkInitalize();
+
             base.Initialize();
+        }
+
+        private void NetworkInitalize()
+        {
+            if (args.ServerMode)
+                network = new NetworkServer();
+            else
+                network = new NetworkClient();
+
+            network.Connect();
         }
 
         /// <summary>
@@ -76,14 +109,17 @@ namespace Katarnov
         /// </summary>
         protected override void LoadContent()
         {
-            contentManager = new ContentManager(Services);
-            // Create a new SpriteBatch, which can be used to draw textures.
+            if (!args.Headless)
+            {
+                contentManager = new ContentManager(Services);
+                // Create a new SpriteBatch, which can be used to draw textures.
 
-            renderer = new SpriteBatchRenderer(this);
+                renderer = new SpriteBatchRenderer(this);
 
-            new Thread(Assets.ImportSprites).Start();
+                new Thread(Assets.ImportSprites).Start();
 
-            // TODO: use this.Content to load your game content here
+                // TODO: use this.Content to load your game content here
+            }
         }
 
         /// <summary>
@@ -108,6 +144,24 @@ namespace Katarnov
                 || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (args.ServerMode)
+                ServerUpdate();
+            else
+                ClientUpdate();
+
+            base.Update(gameTime);
+        }
+
+        private void ClientUpdate()
+        {
+            network.SendMessage("Hi");
+            Input.Update();
+
+            //UpdatePlayer();
+        }
+
+        private void ServerUpdate()
+        {
             if (HasLoaded)
             {
                 if (currentMap == null)
@@ -122,19 +176,15 @@ namespace Katarnov
                     //gameView.position.Z = firstPos.Z;
                     */
                 }
-
-                Input.Update();
-
-                UpdatePlayer();
+                network.Update();
 
                 EntityManager.PopulateEvents();
 
-                EntityManager.QueryForUpdate();
+                EntityManager.QueueUpdates();
+                RoutineManager.QueueUpdates();
 
-                EntityManager.ProcessUpdate();
+                Scheduler.ProcessUpdates();
             }
-
-            base.Update(gameTime);
         }
 
         private void UpdatePlayer()
@@ -165,17 +215,19 @@ namespace Katarnov
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            if (HasLoaded)
+            if (!args.Headless)
             {
-                renderer.QueryForDrawing();
+                GraphicsDevice.Clear(Color.CornflowerBlue);
 
-                renderer.ProcessDrawing();
+                if (HasLoaded)
+                {
+                    renderer.QueryForDrawing();
+
+                    renderer.ProcessDrawing();
+                }
+
+                base.Draw(gameTime);
             }
-
-            base.Draw(gameTime);
         }
     }
 }

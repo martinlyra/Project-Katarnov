@@ -47,6 +47,11 @@ namespace Katarnov.Module.Core.Turf
                         spritePath = "Content/Turf/floor_white.png";
                         break;
                     }
+                case ("/tiled/freezer"):
+                    {
+                        spritePath = "Content/Turf/floor_plastic.png";
+                        break;
+                    }
                 case ("/carpet"):
                     {
                         spritePath = "Content/Turf/floor_carpet.png";

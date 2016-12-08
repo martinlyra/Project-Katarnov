@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoreModule.cs" />
-    <Compile Include="LogicTest.cs" />
     <Compile Include="Mob\PrimitiveHuman.cs" />
     <Compile Include="LandmarkEntity.cs" />
     <Compile Include="Landmark\SpawnLandmark.cs" />
