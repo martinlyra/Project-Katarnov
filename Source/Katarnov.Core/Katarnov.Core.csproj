@@ -104,11 +104,13 @@
     <Compile Include="Network\Events\DisconnectEventArgs.cs" />
     <Compile Include="Network\Events\NetStatusEventArgs.cs" />
     <Compile Include="Network\NetChannel.cs" />
+    <Compile Include="Network\NetClientEvent.cs" />
     <Compile Include="Network\NetMessageType.cs" />
     <Compile Include="Network\NetReceiver.cs" />
     <Compile Include="Network\NetSender.cs" />
     <Compile Include="Network\NetworkClient.cs" />
     <Compile Include="Network\NetworkServer.cs" />
+    <Compile Include="Network\ObjectSerializer.cs" />
     <Compile Include="ProgramArgs.cs" />
     <Compile Include="Unused\EntityDatabase.cs" />
     <Compile Include="Unused\EntityDefine.cs" />

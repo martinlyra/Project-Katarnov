@@ -80,9 +80,10 @@ namespace Katarnov
             {
                 Assets.Initialize();
             }
+            EntityManager.Initialize(this);
+
             if (args.ServerMode)
             {
-                EntityManager.Initialize(this);
                 ModuleManager.Initialize();
                 entityDatabase.Initialize();
                 ByondImporter.Initialize();
@@ -154,10 +155,9 @@ namespace Katarnov
 
         private void ClientUpdate()
         {
-            network.SendMessage("Hi");
             Input.Update();
 
-            //UpdatePlayer();
+            UpdatePlayer();
         }
 
         private void ServerUpdate()
@@ -189,7 +189,24 @@ namespace Katarnov
 
         private void UpdatePlayer()
         {
-            var keyState = Keyboard.GetState();
+            try
+            {
+                var keyState = Keyboard.GetState();
+                var keys = keyState.GetPressedKeys();
+                if (keys.Length > 0)
+                {
+                    network.SendMessage(new NetClientEventMessage(NetClientEventType.KeyState, keys));
+                    Console.Write("You've pressed: ");
+                    foreach (Keys k in keys)
+                        Console.Write(k);
+                    Console.WriteLine("");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            /*
             if (keyState.IsKeyDown(Keys.Up))
             {
                 playerCharacter.position.Y -= 1;
@@ -207,6 +224,7 @@ namespace Katarnov
                 playerCharacter.position.X += 1;
             }
             gameView.position = (Vector3)playerCharacter.position;
+            */
         }
 
         /// <summary>

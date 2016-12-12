@@ -3,6 +3,7 @@ using Lidgren.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -68,9 +69,34 @@ namespace Katarnov.Network
             netpeer.SendMessage(outgoingMessage, netpeer.Connections.First(), NetDeliveryMethod.ReliableOrdered);
         }
 
+        internal virtual void SendMessage(NetClientEventMessage eventmessage)
+        {
+            if (netpeer.Connections == null || netpeer.Connections.Count == 0)
+                return;
+            var outgoingMessage = netpeer.CreateMessage();
+
+            outgoingMessage.Write((byte)NetMessageType.ClientEvent);
+
+            byte[] data = ObjectSerializer.Serialize(eventmessage);
+            int dataSize = data.Length;
+            outgoingMessage.Write(dataSize);
+            outgoingMessage.Write(data);
+
+            netpeer.SendMessage(outgoingMessage, netpeer.Connections.First(), NetDeliveryMethod.ReliableOrdered);
+        }
+
+        internal virtual void SendMessage(object data)
+        {
+            if (netpeer.Connections == null || netpeer.Connections.Count == 0)
+                return;
+            var outgoingMessage = netpeer.CreateMessage();
+            outgoingMessage.Write(ObjectSerializer.Serialize(data));
+            netpeer.SendMessage(outgoingMessage, netpeer.Connections.First(), NetDeliveryMethod.ReliableOrdered);
+        }
+
         internal virtual void OnDataReceived(NetIncomingMessage nim)
         {
-            DataReceived.Invoke(this, new DataReceivedEventArgs());
+            DataReceived.Invoke(this, new DataReceivedEventArgs(nim));
         }
 
         protected NetIncomingMessage ReadMessage()
@@ -87,7 +113,7 @@ namespace Katarnov.Network
 
         protected void RaiseDataRecevied(NetIncomingMessage nim)
         {
-            DataReceived.Invoke(this, new DataReceivedEventArgs());
+            DataReceived.Invoke(this, new DataReceivedEventArgs(nim));
         }
     }
 }

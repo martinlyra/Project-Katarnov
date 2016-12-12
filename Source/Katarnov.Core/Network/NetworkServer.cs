@@ -1,7 +1,10 @@
-﻿using Lidgren.Network;
+﻿using Katarnov.Network.Events;
+using Lidgren.Network;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -57,7 +60,7 @@ namespace Katarnov.Network
 
             while ((nim = ReadMessage()) != null)
             {
-                Console.WriteLine(nim.Data);
+                //Console.WriteLine(nim.Data);
                 switch (nim.MessageType)
                 {
                     case NetIncomingMessageType.Data:
@@ -69,11 +72,33 @@ namespace Katarnov.Network
             }
         }
 
-        internal override void OnDataReceived(NetIncomingMessage nim)
+        protected override void OnDataReceived(object sender, DataReceivedEventArgs e)
         {
-            var messageType = (NetMessageType) nim.ReadByte();
+            var nim = e.Message;
+            var client = nim.SenderConnection.Peer.Configuration.BroadcastAddress;
+            nim.Position = 0;
+            var messageType = (NetMessageType)nim.ReadByte();
 
-            base.OnDataReceived(nim);
+            switch(messageType)
+            {
+                case NetMessageType.ClientEvent:
+                    {
+                        var dataSize = nim.ReadInt32();
+                        var clientEvent = ObjectSerializer.Deserialize<NetClientEventMessage>(
+                            nim.ReadBytes(dataSize));
+
+                        if (clientEvent.EventType == NetClientEventType.KeyState)
+                        {
+                            Console.Write($"{client.ToString()} has pressed: ");
+                            Keys[] keys = (Keys[])clientEvent.Data;
+                            foreach (var k in keys)
+                                Console.Write(k);
+                            Console.Write("\n");
+                        }
+
+                        break;
+                    }
+            }
         }
 
         private void SendMessage(NetOutgoingMessage nom, NetDeliveryMethod ndm)

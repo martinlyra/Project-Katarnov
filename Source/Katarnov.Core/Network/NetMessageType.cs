@@ -16,6 +16,7 @@ namespace Katarnov.Network
 
     enum NetMessageType
     {
+        /*
         Unknown = 0,
         Ping = 1, 
         Pong = 2, // ping answer
@@ -29,5 +30,9 @@ namespace Katarnov.Network
 
         StateRequest,
         StateMessage,
+        */
+
+        ClientEvent = 0,
+        ServerEvent = 1
     }
 }
