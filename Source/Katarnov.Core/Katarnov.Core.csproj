@@ -98,6 +98,8 @@
     <Compile Include="ByondTypePath.cs" />
     <Compile Include="DefaultObjectAttribute.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Input\KeybindConfiguration.cs" />
+    <Compile Include="Input\KeyCommand.cs" />
     <Compile Include="Network\Client.cs" />
     <Compile Include="Network\Events\ConnectEventArgs.cs" />
     <Compile Include="Network\Events\DataReceivedEventArgs.cs" />
@@ -124,7 +126,7 @@
     <Compile Include="Global.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IModule.cs" />
-    <Compile Include="Input.cs" />
+    <Compile Include="Unused\Input.cs" />
     <Compile Include="Unused\IType.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="Level.cs" />

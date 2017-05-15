@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using Katarnov.Input;
 
 namespace Katarnov
 {
@@ -29,6 +30,8 @@ namespace Katarnov
         SpriteBatchRenderer renderer;
 
         ContentManager contentManager;
+
+        KeybindConfiguration keyConfig;
 
         NetworkMember network;
 
@@ -78,7 +81,13 @@ namespace Katarnov
         {
             if (!args.Headless)
             {
+                Console.WriteLine("Loading Assets...");
                 Assets.Initialize();
+
+                Console.WriteLine("Done loading Assets.\nLoading Keybinds...");
+                keyConfig = new KeybindConfiguration();
+                keyConfig.MakeDefaultBingdings(true);
+                Console.WriteLine("Done loading Keybinds.");
             }
             EntityManager.Initialize(this);
 
@@ -155,8 +164,6 @@ namespace Katarnov
 
         private void ClientUpdate()
         {
-            Input.Update();
-
             UpdatePlayer();
         }
 
@@ -195,8 +202,10 @@ namespace Katarnov
                 var keys = keyState.GetPressedKeys();
                 if (keys.Length > 0)
                 {
-                    network.SendMessage(new NetClientEventMessage(NetClientEventType.KeyState, keys));
-                    Console.Write("You've pressed: ");
+                    var commands = keyConfig.GetCommands(keys);
+                    network.SendMessage(new NetClientEventMessage(NetClientEventType.CommandState,
+                        commands.ToArray()));
+                    Console.Write("You've sent commands: ");
                     foreach (Keys k in keys)
                         Console.Write(k);
                     Console.WriteLine("");

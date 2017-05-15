@@ -28,7 +28,13 @@ namespace Katarnov
             }
 
             foreach (var f in loadedSprites)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("ASSET LOADED: ");
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine(f.Key);
+            }
+            Console.ResetColor();
         }
 
         internal static void ImportSprites()

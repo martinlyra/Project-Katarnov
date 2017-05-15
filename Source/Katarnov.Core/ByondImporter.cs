@@ -243,7 +243,7 @@ namespace Katarnov
 
             var definedTiles = _mapImportInfo.DefinedObjects;
 
-            int tileSize = _mapImportInfo.DefinedObjects.First().Key.Length;
+            int tileKeySize = _mapImportInfo.DefinedObjects.First().Key.Length;
             int x, y, z;
 
             x = y = z = 0;
@@ -252,11 +252,11 @@ namespace Katarnov
                 foreach (string mapLine in mapLayerBuffer)
                 {
                     x = 0;
-                    int tiles = mapLine.Length / tileSize;
+                    int tiles = mapLine.Length / tileKeySize;
 
                     for (int i = 0; i < tiles; i++)
                     {
-                        var tile = mapLine.Substring(0 + (tileSize * i), tileSize);
+                        var tile = mapLine.Substring(0 + (tileKeySize * i), tileKeySize);
 
                         if (definedTiles.ContainsKey(tile))
                             definedTiles[tile].ForEach(type =>

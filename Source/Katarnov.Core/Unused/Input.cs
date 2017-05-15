@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Katarnov
+namespace Katarnov.Unused
 {
     public static class Input
     {

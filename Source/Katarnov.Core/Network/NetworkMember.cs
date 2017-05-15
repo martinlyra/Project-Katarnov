@@ -21,13 +21,14 @@ namespace Katarnov.Network
 
         public NetworkMember()
         {
+            Connected += OnConnected;
             DataReceived += OnDataReceived;
+            StatusChanged += OnStatusUpdated;
         }
 
-        protected virtual void OnDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
+        protected virtual void OnStatusUpdated(object sender, NetStatusEventArgs e) { }
+        protected virtual void OnConnected(object sender, ConnectEventArgs e) { }                                                           
+        protected virtual void OnDataReceived(object sender, DataReceivedEventArgs e) { }
 
         protected virtual void Configure()
         {
@@ -35,6 +36,8 @@ namespace Katarnov.Network
 
             netPeerConfig.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
             netPeerConfig.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
+            netPeerConfig.EnableMessageType(NetIncomingMessageType.ConnectionApproval);
+            netPeerConfig.EnableMessageType(NetIncomingMessageType.StatusChanged);
 
             netPeerConfig.LocalAddress = NetUtility.Resolve("localhost");
             //netPeerConfig.Port = 2440;
@@ -99,6 +102,35 @@ namespace Katarnov.Network
             DataReceived.Invoke(this, new DataReceivedEventArgs(nim));
         }
 
+        protected void ProcessPackets()
+        {
+            NetIncomingMessage nim;
+
+            while ((nim = ReadMessage()) != null)
+            {
+                //Console.WriteLine(nim.Data);
+                switch (nim.MessageType)
+                {
+                    case NetIncomingMessageType.ConnectionApproval:
+                        {
+                            RaiseConnection(nim);
+                            break;
+                        }
+                    case NetIncomingMessageType.Data:
+                        {
+                            RaiseDataRecevied(nim);
+                            break;
+                        }
+                    case NetIncomingMessageType.StatusChanged:
+                        {
+                            RaiseStatusUpdate(nim);
+                            break;
+                        }
+                }
+            }
+        }
+
+
         protected NetIncomingMessage ReadMessage()
         {
             return netpeer.ReadMessage();
@@ -109,6 +141,16 @@ namespace Katarnov.Network
             var enumerable = new List<NetIncomingMessage>();
             netpeer.ReadMessages(enumerable);
             return enumerable;
+        }
+
+        protected void RaiseStatusUpdate(NetIncomingMessage nim)
+        {
+            StatusChanged.Invoke(this, new NetStatusEventArgs(nim));
+        }
+
+        protected void RaiseConnection(NetIncomingMessage nim)
+        {
+            Connected.Invoke(this, new ConnectEventArgs(nim));
         }
 
         protected void RaiseDataRecevied(NetIncomingMessage nim)

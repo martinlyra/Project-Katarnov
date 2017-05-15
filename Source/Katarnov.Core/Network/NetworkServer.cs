@@ -1,4 +1,5 @@
-﻿using Katarnov.Network.Events;
+﻿using Katarnov.Input;
+using Katarnov.Network.Events;
 using Lidgren.Network;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -54,22 +55,13 @@ namespace Katarnov.Network
             ProcessPackets(); 
         }
 
-        private void ProcessPackets()
+        protected override void OnConnected(object sender, ConnectEventArgs e)
         {
-            NetIncomingMessage nim;
+            var nim = e.Message;
+            var client = nim.SenderConnection.Peer.Configuration.BroadcastAddress;
 
-            while ((nim = ReadMessage()) != null)
-            {
-                //Console.WriteLine(nim.Data);
-                switch (nim.MessageType)
-                {
-                    case NetIncomingMessageType.Data:
-                        {
-                            RaiseDataRecevied(nim);
-                            break;
-                        }
-                }
-            }
+            nim.SenderConnection.Approve();
+            Console.WriteLine($"{client} has connected to server.");
         }
 
         protected override void OnDataReceived(object sender, DataReceivedEventArgs e)
@@ -87,12 +79,12 @@ namespace Katarnov.Network
                         var clientEvent = ObjectSerializer.Deserialize<NetClientEventMessage>(
                             nim.ReadBytes(dataSize));
 
-                        if (clientEvent.EventType == NetClientEventType.KeyState)
+                        if (clientEvent.EventType == NetClientEventType.CommandState)
                         {
                             Console.Write($"{client.ToString()} has pressed: ");
-                            Keys[] keys = (Keys[])clientEvent.Data;
-                            foreach (var k in keys)
-                                Console.Write(k);
+                            KeyCommand[] cmds = (KeyCommand[])clientEvent.Data;
+                            foreach (var cmd in cmds)
+                                Console.Write(cmd);
                             Console.Write("\n");
                         }
 

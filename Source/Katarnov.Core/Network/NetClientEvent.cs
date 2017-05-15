@@ -10,7 +10,7 @@ namespace Katarnov.Network
     [Serializable]
     enum NetClientEventType
     {
-        KeyState,
+        CommandState,
         MouseState
     }
 
